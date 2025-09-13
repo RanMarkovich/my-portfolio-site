@@ -3,8 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Your Name — Portfolio</title>
+    <title>Ran Markovich — Portfolio</title>
     <meta name="description" content="Creative Developer & Designer — Portfolio" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+    <link rel="alternate icon" href="./assets/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,12 +27,17 @@
     <div id="transition-overlay" aria-hidden="true"></div>
 
     <!-- Custom Cursor -->
-    <div id="cursor" aria-hidden="true"><span id="cursor-label"></span></div>
+    <div id="cursor" aria-hidden="true">
+      <svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path id="cursor-infinity" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" d="M20,40 C20,20 60,20 60,40 C60,60 100,60 100,40 C100,20 60,20 60,40 C60,60 20,60 20,40"/>
+      </svg>
+      <span id="cursor-label"></span>
+    </div>
 
     <!-- Header -->
     <header class="site-header">
       <div class="container header-inner">
-        <div class="logo">Ran Markovich</div>
+        <div class="logo"><span class="violet">R</span>an <span class="violet">M</span>arkovich</div>
         <nav class="site-nav">
           <a href="#home" class="nav-link magnetic has-hover" data-hover="">Home</a>
           <a href="#work" class="nav-link magnetic has-hover" data-hover="">Work</a>
@@ -45,15 +54,24 @@
           <div class="blob b1"></div>
           <div class="blob b2"></div>
           <div class="blob b3"></div>
+          <div class="blob b4"></div>
+          <div class="blob b5"></div>
         </div>
         <div class="container hero-inner">
-          <h3 class="section-title reveal">
-            <span class="split">Ran Markovich</span>
-          </h3>
-          <h1 class="hero-title-prof">
-            <span class="split">DevOps Engineer</span>
-          </h1>
-          <p class="hero-sub">I build scalable, efficient, and secure systems.</p>
+          <div class="hero-content">
+            <h3 class="hero-title-name">
+              <span class="split">Ran Markovich</span>
+            </h3>
+            <h1 class="hero-title-prof">
+              <span class="split">DevOps Engineer</span>
+            </h1>
+            <p class="hero-sub">I build scalable, efficient, and secure systems.</p>
+          </div>
+          <figure class="hero-photo">
+            <div class="hero-photo-frame">
+              <img src="./assets/profile.jpg" alt="Ran Markovich headshot" loading="eager" />
+            </div>
+          </figure>
         </div>
       </section>
 

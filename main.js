@@ -29,17 +29,37 @@ function splitText(node) {
   node.appendChild(frag);
   return spans;
 }
-function animateHero() {
+function animateHeroName() {
+  const headline = document.querySelector(".hero-title-name .split");
+  if (!headline) return;
+  const letters = splitText(headline);
+  gsap.fromTo(letters, { opacity: 0, y: 20, rotateX: -30 }, { opacity: 1, y: 0, rotateX: 0, ease: easeOutExpo, duration: 1.1, stagger: { each: 0.02, from: "start" }, delay: 0.2 });
+}
+function animateHeroProf() {
   const headline = document.querySelector(".hero-title-prof .split");
   if (!headline) return;
   const letters = splitText(headline);
-  gsap.fromTo(letters, { opacity: 0, y: 20, rotateX: -30 }, { opacity: 1, y: 0, rotateX: 0, ease: easeOutExpo, duration: 5.1, stagger: { each: 0.02, from: "start" }, delay: 0.5 });
+  gsap.fromTo(letters, { opacity: 0, y: 20, rotateX: -30 }, { opacity: 1, y: 0, rotateX: 0, ease: easeOutExpo, duration: 1.1, stagger: { each: 0.02, from: "start" }, delay: 0.35 });
 }
 function animateBlobs() {
   const blobs = document.querySelectorAll(".blob");
+  const vw = () => window.innerWidth;
+  const vh = () => window.innerHeight;
   blobs.forEach((blob, i) => {
-    gsap.to(blob, { x: () => gsap.utils.random(-60, 60), y: () => gsap.utils.random(-40, 40), scale: () => gsap.utils.random(0.9, 1.1), duration: () => gsap.utils.random(6, 10), ease: "sine.inOut", repeat: -1, yoyo: true, delay: i * 0.2 });
+    const startX = gsap.utils.random(0.1 * vw(), 0.9 * vw());
+    const startY = gsap.utils.random(0.1 * vh(), 0.9 * vh());
+    gsap.set(blob, { x: startX, y: startY, scale: gsap.utils.random(0.9, 1.15), opacity: gsap.utils.random(0.55, 0.75) });
+    const timeline = gsap.timeline({ repeat: -1, yoyo: true, defaults: { ease: "sine.inOut" } });
+    const dx = gsap.utils.random(0.2 * vw(), 0.8 * vw());
+    const dy = gsap.utils.random(0.2 * vh(), 0.8 * vh());
+    timeline.to(blob, { duration: gsap.utils.random(6, 10), x: `+=${dx * (i % 2 === 0 ? 1 : -1)}`, y: `+=${dy * (i % 2 === 0 ? -1 : 1)}`, scale: gsap.utils.random(0.95, 1.1), opacity: gsap.utils.random(0.6, 0.85) }, 0).progress(gsap.utils.random(0, 1));
+    gsap.to(blob, { duration: gsap.utils.random(3, 5), scale: "+=0.05", yoyo: true, repeat: -1, ease: "sine.inOut" });
   });
+  if (typeof ScrollTrigger !== "undefined") {
+    blobs.forEach((blob, idx) => {
+      gsap.to(blob, { yPercent: (idx % 2 === 0 ? -1 : 1) * 8, scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true } });
+    });
+  }
 }
 function setupScrollReveals() {
   if (typeof ScrollTrigger !== "undefined") {
@@ -50,19 +70,44 @@ function setupScrollReveals() {
     gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, ease: easeOutExpo, duration: 0.9, scrollTrigger: { trigger: el, start: "top 80%", toggleActions: "play none none reverse" } });
   });
 }
+function animateHeroPhoto() {
+  const photo = document.querySelector(".hero-photo-frame");
+  if (!photo) return;
+  gsap.fromTo(photo, { y: 20, opacity: 0, scale: 0.96, rotate: -2 }, { y: 0, opacity: 1, scale: 1, rotate: 0, duration: 0.9, ease: easeOutExpo, delay: 0.35 });
+}
 function setupCursor() {
   const cursor = document.getElementById("cursor");
   const label = document.getElementById("cursor-label");
+  const infinityPath = document.getElementById("cursor-infinity");
   if (!cursor || !label) return;
   const state = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: 0, ty: 0, label: null };
+  let lastX = state.x;
+  let lastY = state.y;
+  let velocity = 0;
   function move(e) {
     state.tx = e.clientX;
     state.ty = e.clientY;
   }
   function render() {
-    state.x = lerp(state.x, state.tx, 0.18);
-    state.y = lerp(state.y, state.ty, 0.18);
+    const prevX = state.x;
+    const prevY = state.y;
+    state.x = lerp(state.x, state.tx, 0.22);
+    state.y = lerp(state.y, state.ty, 0.22);
     cursor.style.transform = `translate(${state.x}px, ${state.y}px)`;
+    const dx = state.x - prevX;
+    const dy = state.y - prevY;
+    const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+    const speed = Math.min(1, Math.hypot(dx, dy) / 24);
+    velocity = lerp(velocity, speed, 0.2);
+    const svg = cursor.querySelector("svg");
+    if (svg) {
+      const stretch = 1 + velocity * 0.35;
+      svg.style.transform = `rotate(${angle}deg) scaleX(${stretch})`;
+      if (infinityPath instanceof SVGPathElement) {
+        infinityPath.setAttribute("stroke-width", String(8 + velocity * 4));
+        infinityPath.setAttribute("opacity", String(0.8 + 0.2 * velocity));
+      }
+    }
     state.raf = requestAnimationFrame(render);
   }
   state.raf = requestAnimationFrame(render);
@@ -177,7 +222,8 @@ function setYear() {
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 }
 function init() {
-  animateHero();
+  animateHeroName();
+  animateHeroProf();
   animateBlobs();
   setupScrollReveals();
   setupCursor();
@@ -185,6 +231,7 @@ function init() {
   setupPageTransitions();
   setupProjectOverlay();
   setYear();
+  animateHeroPhoto();
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
