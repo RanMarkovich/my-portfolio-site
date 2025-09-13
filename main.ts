@@ -163,6 +163,7 @@ function setupCursor(): void {
   const cursor = document.getElementById("cursor");
   const label = document.getElementById("cursor-label");
   const infinityPath = document.getElementById("cursor-infinity");
+  // If cursor DOM is missing, skip custom cursor setup entirely (rest of app works)
   if (!cursor || !label) return;
 
   const state: CursorState = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: 0, ty: 0, label: null };
