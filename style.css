@@ -213,4 +213,29 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
   .hero-title { letter-spacing: -.5px; }
 }
 
+/* Enhanced responsive rules */
+@media (max-width: 900px) {
+  .hero { padding-top: 110px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+  .hero-content { text-align: center; }
+  .hero-photo { justify-self: center; }
+  .hero::after { height: 1px; opacity: .9; }
+  .site-nav { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+}
+
+@media (max-width: 600px) {
+  .section { padding: 72px 0; }
+  .logo { font-size: 18px; }
+  .site-nav { gap: 12px; }
+  .projects-grid { gap: 16px; }
+  .project-meta { padding: 14px 14px 18px; }
+  .hero-photo-frame { width: clamp(160px, 45vw, 220px); }
+}
+
+@media (max-width: 480px) {
+  .hero { padding-top: 96px; }
+  .hero-title-name { font-size: clamp(20px, 8vw, 28px); letter-spacing: 2px; }
+  .hero-title-prof { font-size: clamp(24px, 9vw, 34px); letter-spacing: 1px; }
+}
+
 
