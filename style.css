@@ -100,9 +100,25 @@ body {
 
 /* Hero photo */
 .hero-photo { margin: 0; justify-self: end; }
-.hero-photo-frame { position: relative; width: clamp(180px, 28vw, 280px); aspect-ratio: 1/1; border-radius: 18px; overflow: hidden; background: radial-gradient(120% 120% at 20% 10%, rgba(124,58,237,.25), transparent 60%), #0e1118; border: 1px solid var(--border); box-shadow: var(--shadow); transform: translateY(10px); }
+.hero-photo-frame { position: relative; width: clamp(180px, 28vw, 280px); aspect-ratio: 1/1; border-radius: 18px; overflow: hidden; background: radial-gradient(120% 120% at 20% 10%, rgba(124,58,237,.25), transparent 60%), #0e1118; border: 1px solid var(--border); box-shadow: var(--shadow); transform: translateY(10px); will-change: transform, filter; animation: float 6s ease-in-out infinite; }
 .hero-photo-frame::before { content: ""; position: absolute; inset: -2px; border-radius: 20px; background: conic-gradient(from 90deg, rgba(124,58,237,.35), rgba(6,182,212,.25), rgba(124,58,237,.35)); filter: blur(18px); opacity: .35; z-index: 0; }
 .hero-photo-frame img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.hero-photo-frame::after { content: ""; position: absolute; left: 50%; bottom: -10px; transform: translateX(-50%) scale(1); width: 70%; height: 18px; border-radius: 999px; background: radial-gradient(closest-side, rgba(0,0,0,.55), rgba(0,0,0,0) 70%); filter: blur(6px); opacity: .6; will-change: transform, opacity; animation: shadow-breathe 6s ease-in-out infinite; }
+
+@keyframes float {
+  0% { transform: translateY(10px); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(10px); }
+}
+
+@keyframes shadow-breathe {
+  0% { transform: translateX(-50%) scale(1); opacity: .55; }
+  50% { transform: translateX(-50%) scale(0.95); opacity: .45; }
+  100% { transform: translateX(-50%) scale(1); opacity: .55; }
+}
+
+.hero-photo-frame:hover { animation-duration: 4.5s; }
+.hero-photo-frame:hover::after { filter: blur(8px); }
 
 .hero-bg { position: absolute; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
 .blob {
