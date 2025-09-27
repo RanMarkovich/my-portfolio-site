@@ -75,6 +75,22 @@ function animateHeroPhoto() {
   if (!photo) return;
   gsap.fromTo(photo, { y: 20, opacity: 0, scale: 0.96, rotate: -2 }, { y: 0, opacity: 1, scale: 1, rotate: 0, duration: 0.9, ease: easeOutExpo, delay: 0.35 });
 }
+function typewriterEffect() {
+  const target = document.getElementById("typewriter");
+  if (!target) return;
+  const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery.";
+  target.textContent = "";
+  const chars = fullText.split("");
+  let i = 0;
+  function typeNext() {
+    if (i >= chars.length) return;
+    target.textContent += chars[i];
+    i += 1;
+    const jitter = gsap.utils.random(22, 48);
+    setTimeout(typeNext, jitter);
+  }
+  setTimeout(typeNext, 350);
+}
 function setupCursor() {
   const cursor = document.getElementById("cursor");
   const label = document.getElementById("cursor-label");
@@ -232,6 +248,7 @@ function init() {
   setupProjectOverlay();
   setYear();
   animateHeroPhoto();
+  typewriterEffect();
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);

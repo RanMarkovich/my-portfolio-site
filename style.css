@@ -79,11 +79,13 @@ body {
 
 .section { padding: 120px 0; position: relative; }
 .hero { min-height: 100vh; display: grid; place-items: center; padding-top: 140px; }
-.hero-inner { text-align: left; display: grid; grid-template-columns: 1.4fr .9fr; gap: 36px; align-items: center; }
+.hero-inner { text-align: left; display: grid; grid-template-columns: 1.4fr .9fr; gap: 36px; align-items: center; padding-right: 200px;}
 .hero-content { display: grid; gap: 8px; }
-.hero-title-name { font-size: clamp(36px, 7vw, 15px); line-height: 1.05; letter-spacing: 5px; margin: 0 0 16px; }
+.hero-title-name { font-family: fantasy; font-size: clamp(36px, 7vw, 15px); line-height: 1.05; letter-spacing: 5px; margin: 0 0 16px; }
 .hero-title-prof { font-size: clamp(36px, 7vw, 40px); line-height: 1.05; letter-spacing: 2px; margin: 0 0 16px; }
-.hero-sub { color: var(--muted); margin: 0; }
+.hero-sub { font-family: cursive; color: var(--muted); margin: 0; display: inline-flex; align-items: center; gap: 6px; min-height: 1.6em; }
+.caret { width: 10px; height: 1.2em; border-right: 2px solid var(--text); display: inline-block; transform: translateY(2px); animation: blink .9s steps(1) infinite; }
+@keyframes blink { 50% { border-color: transparent; } }
 
 /* Gradient divider between hero and projects */
 .hero::after {
@@ -234,7 +236,7 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
 
 @media (max-width: 480px) {
   .hero { padding-top: 96px; }
-  .hero-title-name { font-size: clamp(20px, 8vw, 28px); letter-spacing: 2px; }
+  .hero-title-name { font-family: fantasy; font-size: clamp(20px, 8vw, 28px); letter-spacing: 2px; }
   .hero-title-prof { font-size: clamp(24px, 9vw, 34px); letter-spacing: 1px; }
 }
 
