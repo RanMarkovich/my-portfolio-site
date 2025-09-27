@@ -218,7 +218,7 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
 /* Enhanced responsive rules */
 @media (max-width: 900px) {
   .hero { padding-top: 110px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 50px; }
   .hero-content { text-align: center; }
   .hero-photo { justify-self: center; }
   .hero::after { height: 1px; opacity: .9; }

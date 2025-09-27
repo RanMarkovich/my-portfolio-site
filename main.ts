@@ -162,13 +162,19 @@ function animateHeroPhoto(): void {
 function typewriterEffect(): void {
   const target = document.getElementById("typewriter");
   if (!target) return;
-  const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery.";
+  const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery. 🚀";
   target.textContent = "";
   const chars = fullText.split("");
   let i = 0;
 
   function typeNext() {
-    if (i >= chars.length) return;
+    if (i >= chars.length) {
+      const caret = document.querySelector<HTMLElement>(".caret");
+      if (caret && caret.parentElement) {
+        caret.parentElement.removeChild(caret);
+      }
+      return;
+    }
     target.textContent += chars[i];
     i += 1;
     const jitter = gsap.utils.random(22, 48); // simulate human typing speed
