@@ -1,0 +1,5 @@
+**/*/account.tfvars
+**/*/.terraform/*
+**/*/backend.tf
+**/*terraform.tfstate.backup
+**/*.tfstate
