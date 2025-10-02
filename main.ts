@@ -1,4 +1,5 @@
 // Global declarations for GSAP when using CDN without type defs
+export {};
 declare const gsap: any;
 declare const ScrollTrigger: any;
 
@@ -162,8 +163,9 @@ function animateHeroPhoto(): void {
 function typewriterEffect(): void {
   const target = document.getElementById("typewriter");
   if (!target) return;
+  const targetEl = target as HTMLElement;
   const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery. 🚀";
-  target.textContent = "";
+  targetEl.textContent = "";
   const chars = fullText.split("");
   let i = 0;
 
@@ -175,7 +177,7 @@ function typewriterEffect(): void {
       }
       return;
     }
-    target.textContent += chars[i];
+    targetEl.textContent += chars[i];
     i += 1;
     const jitter = gsap.utils.random(22, 48); // simulate human typing speed
     setTimeout(typeNext, jitter);
@@ -191,6 +193,8 @@ function setupCursor(): void {
   const infinityPath = document.getElementById("cursor-infinity");
   // If cursor DOM is missing, skip custom cursor setup entirely (rest of app works)
   if (!cursor || !label) return;
+  const cursorEl = cursor as HTMLElement;
+  const labelEl = label as HTMLElement;
 
   const state: CursorState = { x: window.innerWidth / 2, y: window.innerHeight / 2, tx: 0, ty: 0, label: null };
 
@@ -207,7 +211,7 @@ function setupCursor(): void {
     const prevY = state.y;
     state.x = lerp(state.x, state.tx, 0.22);
     state.y = lerp(state.y, state.ty, 0.22);
-    cursor.style.transform = `translate(${state.x}px, ${state.y}px)`;
+    cursorEl.style.transform = `translate(${state.x}px, ${state.y}px)`;
     // compute velocity and orient the infinity symbol
     const dx = state.x - prevX;
     const dy = state.y - prevY;
@@ -215,7 +219,7 @@ function setupCursor(): void {
     const speed = Math.min(1, Math.hypot(dx, dy) / 24);
     velocity = lerp(velocity, speed, 0.2);
 
-    const svg = cursor.querySelector("svg") as SVGSVGElement | null;
+    const svg = cursorEl.querySelector("svg") as SVGSVGElement | null;
     if (svg) {
       const stretch = 1 + velocity * 0.35; // stretch with speed
       svg.style.transform = `rotate(${angle}deg) scaleX(${stretch})`;
@@ -237,14 +241,14 @@ function setupCursor(): void {
     el.addEventListener("mouseenter", () => {
       const text = el.getAttribute("data-hover");
       if (text) {
-        label.textContent = text;
-        cursor.classList.add("show-label");
+        labelEl.textContent = text;
+        cursorEl.classList.add("show-label");
       }
-      cursor.classList.add("enlarge");
+      cursorEl.classList.add("enlarge");
     });
     el.addEventListener("mouseleave", () => {
-      cursor.classList.remove("enlarge", "show-label");
-      label.textContent = "";
+      cursorEl.classList.remove("enlarge", "show-label");
+      labelEl.textContent = "";
     });
   });
 }
@@ -328,25 +332,31 @@ function setupProjectOverlay(): void {
   const tags = overlay?.querySelector<HTMLElement>(".overlay-tags");
   const media = overlay?.querySelector<HTMLElement>(".overlay-media .img");
   if (!overlay || !closeBtn || !title || !desc || !tags || !media) return;
+  const overlayEl = overlay as HTMLElement;
+  const closeBtnEl = closeBtn as HTMLButtonElement;
+  const titleEl = title as HTMLElement;
+  const descEl = desc as HTMLElement;
+  const tagsEl = tags as HTMLElement;
+  const mediaEl = media as HTMLElement;
 
   function openProject(el: HTMLElement) {
     const pTitle = el.getAttribute("data-project-title") || "Project";
     const pDesc = el.getAttribute("data-project-desc") || "";
     const pTags = (el.getAttribute("data-project-tags") || "").split(",").map((t) => t.trim()).filter(Boolean);
 
-    title.textContent = pTitle;
-    desc.textContent = pDesc;
-    tags.innerHTML = "";
+    titleEl.textContent = pTitle;
+    descEl.textContent = pDesc;
+    tagsEl.innerHTML = "";
     for (const t of pTags) {
       const badge = document.createElement("span");
       badge.className = "tag";
       badge.textContent = t;
-      tags.appendChild(badge);
+      tagsEl.appendChild(badge);
     }
 
-    overlay.classList.add("active");
+    overlayEl.classList.add("active");
     gsap.fromTo(
-      overlay,
+      overlayEl,
       { opacity: 0 },
       { opacity: 1, duration: 0.25, ease: easeInOut }
     );
@@ -359,14 +369,14 @@ function setupProjectOverlay(): void {
 
   function closeProject() {
     gsap.to(".project-overlay-inner", { y: 10, opacity: 0, duration: 0.3, ease: easeInOut });
-    gsap.to(overlay, {
+    gsap.to(overlayEl, {
       opacity: 0,
       duration: 0.25,
       ease: easeInOut,
       delay: 0.15,
       onComplete: () => {
-        overlay.classList.remove("active");
-        overlay.style.opacity = "";
+        overlayEl.classList.remove("active");
+        overlayEl.style.opacity = "";
       },
     });
   }
@@ -378,13 +388,69 @@ function setupProjectOverlay(): void {
     });
   });
 
-  closeBtn.addEventListener("click", closeProject);
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeProject();
+  closeBtnEl.addEventListener("click", closeProject);
+  overlayEl.addEventListener("click", (e) => {
+    if (e.target === overlayEl) closeProject();
   });
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && overlay.classList.contains("active")) closeProject();
+    if (e.key === "Escape" && overlayEl.classList.contains("active")) closeProject();
   });
+}
+
+// Experience timeline with scroll-driven progress
+function setupTimeline(): void {
+  const section = document.getElementById("timeline");
+  if (!section) return;
+
+  const progress = section.querySelector<HTMLElement>("#timeline-progress");
+
+  const points = Array.from(section.querySelectorAll<HTMLElement>(".timeline-point"));
+  const line = section.querySelector<HTMLElement>(".timeline-line");
+  if (!line || !progress) return;
+  const lineEl = line as HTMLElement;
+  const progressEl = progress as HTMLElement;
+
+  function updatePassed() {
+    const lineRect = lineEl.getBoundingClientRect();
+    const progressRect = progressEl.getBoundingClientRect();
+    const progressBottom = progressRect.bottom; // since progress grows downward from top
+
+    points.forEach((pt) => {
+      const dot = pt.querySelector<HTMLElement>(".point-dot");
+      if (!dot) return;
+      const dotRect = dot.getBoundingClientRect();
+      const dotCenterY = dotRect.top + dotRect.height / 2;
+      const insideColumn = dotRect.left >= lineRect.left - 20 && dotRect.left <= lineRect.right + 40; // coarse check
+      if (insideColumn && dotCenterY <= progressBottom) {
+        pt.classList.add("passed");
+      } else {
+        pt.classList.remove("passed");
+      }
+    });
+  }
+
+  // Time-based progress animation triggered on section enter
+  const anim = gsap.fromTo(
+    progressEl,
+    { height: "0%" },
+    { height: "100%", duration: 2.2, ease: easeInOut, paused: true, onUpdate: updatePassed }
+  );
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "top 80%",
+    onEnter: () => anim.restart(true),
+    onEnterBack: () => anim.restart(true),
+    onLeaveBack: () => {
+      anim.pause(0);
+      progressEl.style.height = "0%";
+      points.forEach((pt) => pt.classList.remove("passed"));
+      updatePassed();
+    },
+  });
+
+  updatePassed();
+  window.addEventListener("resize", updatePassed);
 }
 
 // Footer year
@@ -399,6 +465,7 @@ function init(): void {
   animateHeroProf();
   animateBlobs();
   setupScrollReveals();
+  setupTimeline();
   setupCursor();
   setupMagnetic();
   setupPageTransitions();

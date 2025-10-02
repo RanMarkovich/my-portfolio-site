@@ -239,6 +239,35 @@ function setupProjectOverlay() {
     if (e.key === "Escape" && overlay.classList.contains("active")) closeProject();
   });
 }
+function setupTimeline() {
+  const section = document.getElementById("timeline");
+  if (!section) return;
+  const progress = section.querySelector("#timeline-progress");
+  const points = Array.from(section.querySelectorAll(".timeline-point"));
+  const line = section.querySelector(".timeline-line");
+  if (!line || !progress) return;
+  function updatePassed() {
+    const lineRect = line.getBoundingClientRect();
+    const progressRect = progress.getBoundingClientRect();
+    const progressBottom = progressRect.bottom;
+    points.forEach((pt) => {
+      const dot = pt.querySelector(".point-dot");
+      if (!dot) return;
+      const dotRect = dot.getBoundingClientRect();
+      const dotCenterY = dotRect.top + dotRect.height / 2;
+      const insideColumn = dotRect.left >= lineRect.left - 20 && dotRect.left <= lineRect.right + 40;
+      if (insideColumn && dotCenterY <= progressBottom) {
+        pt.classList.add("passed");
+      } else {
+        pt.classList.remove("passed");
+      }
+    });
+  }
+  const anim = gsap.fromTo(progress, { height: "0%" }, { height: "100%", duration: 10, ease: easeInOut, paused: true, onUpdate: updatePassed });
+  ScrollTrigger.create({ trigger: section, start: "top 80%", onEnter: () => anim.restart(true), onEnterBack: () => anim.restart(true), onLeaveBack: () => { anim.pause(0); progress.style.height = "0%"; points.forEach((pt) => pt.classList.remove("passed")); updatePassed(); } });
+  updatePassed();
+  window.addEventListener("resize", updatePassed);
+}
 function setYear() {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
@@ -248,6 +277,7 @@ function init() {
   animateHeroProf();
   animateBlobs();
   setupScrollReveals();
+  setupTimeline();
   setupCursor();
   setupMagnetic();
   setupPageTransitions();
