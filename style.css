@@ -211,7 +211,7 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
 /* Timeline */
 .timeline-wrap { position: relative; padding-left: 44px; }
 .timeline-line { position: absolute; left: 16px; top: 0; bottom: 0; width: 4px; background: var(--border); border-radius: 999px; overflow: hidden; }
-.timeline-progress { position: absolute; left: 0; top: 0; width: 100%; height: 0%; background: linear-gradient(180deg, var(--accent), var(--accent-2)); border-radius: 999px; }
+.timeline-progress { position: absolute; left: 0; bottom: 0; width: 100%; height: 0%; background: linear-gradient(0deg, var(--accent), var(--accent-2)); border-radius: 999px; }
 .timeline-points { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
 .timeline-point { display: grid; grid-template-columns: 20px 1fr; column-gap: 16px; align-items: start; }
 .point-dot { width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--accent); background: #0e1118; margin-top: 6px; transition: background .25s ease, box-shadow .25s ease, border-color .25s ease; }

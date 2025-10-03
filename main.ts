@@ -413,7 +413,7 @@ function setupTimeline(): void {
   function updatePassed() {
     const lineRect = lineEl.getBoundingClientRect();
     const progressRect = progressEl.getBoundingClientRect();
-    const progressBottom = progressRect.bottom; // since progress grows downward from top
+    const progressTop = progressRect.top; // since progress now grows upward from bottom
 
     points.forEach((pt) => {
       const dot = pt.querySelector<HTMLElement>(".point-dot");
@@ -421,7 +421,7 @@ function setupTimeline(): void {
       const dotRect = dot.getBoundingClientRect();
       const dotCenterY = dotRect.top + dotRect.height / 2;
       const insideColumn = dotRect.left >= lineRect.left - 20 && dotRect.left <= lineRect.right + 40; // coarse check
-      if (insideColumn && dotCenterY <= progressBottom) {
+      if (insideColumn && dotCenterY >= progressTop) {
         pt.classList.add("passed");
       } else {
         pt.classList.remove("passed");

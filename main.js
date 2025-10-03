@@ -249,14 +249,14 @@ function setupTimeline() {
   function updatePassed() {
     const lineRect = line.getBoundingClientRect();
     const progressRect = progress.getBoundingClientRect();
-    const progressBottom = progressRect.bottom;
+    const progressTop = progressRect.top;
     points.forEach((pt) => {
       const dot = pt.querySelector(".point-dot");
       if (!dot) return;
       const dotRect = dot.getBoundingClientRect();
       const dotCenterY = dotRect.top + dotRect.height / 2;
       const insideColumn = dotRect.left >= lineRect.left - 20 && dotRect.left <= lineRect.right + 40;
-      if (insideColumn && dotCenterY <= progressBottom) {
+      if (insideColumn && dotCenterY >= progressTop) {
         pt.classList.add("passed");
       } else {
         pt.classList.remove("passed");
