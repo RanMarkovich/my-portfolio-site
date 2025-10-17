@@ -87,8 +87,19 @@ body {
 .caret { width: 10px; height: 1.2em; border-right: 2px solid var(--text); display: inline-block; transform: translateY(2px); animation: blink .9s steps(1) infinite; }
 @keyframes blink { 50% { border-color: transparent; } }
 
-/* Gradient divider between hero and projects */
+/* Gradient divider between hero and about */
 .hero::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,.9) 0%, var(--accent) 40%, var(--accent) 60%, rgba(255,255,255,.9) 100%);
+  box-shadow: 0 0 18px rgba(124,58,237,.45), inset 0 0 6px rgba(255,255,255,.35);
+  opacity: .95;
+}
+
+/* Gradient divider between about and contact */
+.about::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -255,6 +266,7 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
   .hero-content { text-align: center; }
   .hero-photo { justify-self: center; }
   .hero::after { height: 1px; opacity: .9; }
+  .about::after { height: 1px; opacity: .9; }
   .site-nav { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
 }
 
