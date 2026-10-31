@@ -17,6 +17,9 @@ permissions:
   contents: read
   pull-requests: write
 
+env:
+  TF_VERSION: "1.9.8"
+
 defaults:
   run:
     working-directory: DevOps/Terraform
@@ -38,7 +41,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.9.8"
+          terraform_version: ${{ env.TF_VERSION }}
 
       - name: Terraform Format Check
         id: fmt
@@ -46,7 +49,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
+        run: terraform init -backend-config=backend.hcl
 
       - name: Terraform Validate
         id: validate
@@ -105,15 +108,15 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: us-east-1
+          aws-region: ap-northeast-1
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.7.0"
+          terraform_version: ${{ env.TF_VERSION }}
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -backend-config=backend.hcl
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -no-color
