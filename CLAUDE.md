@@ -4,7 +4,7 @@
 # Stack
 - Plain HTML/CSS/JS; no package.json, bundler, or tsconfig
 - GSAP 3.12.5 + ScrollTrigger via jsDelivr CDN; typed as `declare const` globals in `main.ts`
-- [infra] Terraform AWS provider ~> 5.0 in `DevOps/Terraform`; local state (`backend.hcl` not wired in)
+- [infra] Terraform AWS provider ~> 5.0 in `DevOps/Terraform/**`; local state (`backend.hcl` not wired in)
 - [CI] `.github/workflows/deploy.yml`: manual dispatch, `aws s3 sync --delete` of repo root
 
 # Workflow

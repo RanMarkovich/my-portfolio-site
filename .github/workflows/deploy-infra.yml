@@ -5,12 +5,12 @@ on:
     branches:
       - main
     paths:
-      - 'DevOps/Terraform'
+      - 'DevOps/Terraform/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'DevOps/Terraform'
+      - 'DevOps/Terraform/**'
 
 permissions:
   id-token: write
@@ -19,7 +19,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./DevOps/Terraform
+    working-directory: ./DevOps/Terraform/**
 
 jobs:
   plan:
