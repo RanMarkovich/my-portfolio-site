@@ -9,8 +9,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: true
+  group: deploy-prod
+  cancel-in-progress: false
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -19,7 +19,9 @@ env:
 jobs:
   deploy:
     name: Sync to S3
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,20 +35,16 @@ jobs:
 
       - name: Sync site to S3 bucket
         run: |
-          aws s3 sync . s3://$S3_BUCKET_NAME \
+          aws s3 sync . "s3://$S3_BUCKET_NAME" \
             --delete \
             --no-progress \
-            --exclude ".git/*" \
-            --exclude ".github/*" \
-            --exclude "DevOps/*" \
-            --exclude "DevOps/**" \
-            --exclude "**/*.ts" \
-            --exclude "**/.terraform/*" \
-            --exclude "**/*.tf" \
-            --exclude "**/*.tfvars" \
-            --exclude "README.md" \
-            --exclude "LICENSE" \
-            --exclude ".gitignore"
+            --exclude "*" \
+            --include "index.html" \
+            --include "style.css" \
+            --include "main.js" \
+            --include "assets/favicon.svg" \
+            --include "assets/profile.jpg" \
+            --include "assets/DevOpsLabs.jpg"
 
       - name: Show website endpoint hint
         run: |

@@ -4,13 +4,15 @@
 # Stack
 - Plain HTML/CSS/JS; no package.json, bundler, or tsconfig
 - GSAP 3.12.5 + ScrollTrigger via jsDelivr CDN; typed as `declare const` globals in `main.ts`
-- [infra] Terraform AWS provider ~> 5.0 in `DevOps/Terraform/**`; local state (`backend.hcl` not wired in)
-- [CI] `.github/workflows/deploy.yml`: manual dispatch, `aws s3 sync --delete` of repo root
+- [infra] Terraform in `DevOps/Terraform`; S3 remote state via `terraform init -backend-config=backend.hcl`
+- [infra] TF version pinned in `.terraform-version` and `TF_VERSION` in `deploy-infra.yml`; bump both
+- [CI] `deploy.yml`: manual dispatch, `main` only, `aws s3 sync --delete` of an `--include` allowlist
+- [CI] `deploy-infra.yml`: plan on PR, apply on push to `main`
 
 # Workflow
 - `main.ts` = source, `main.js` = shipped; no build step, mirror every change into both by hand
 - New pages: copy `project.html` head (style.css, GSAP CDN, deferred main.js)
-- New root files deploy to S3 unless added to sync `--exclude` list in `deploy.yml`
+- Only `--include` paths in `deploy.yml` ship to S3; add new site files there
 - 404 page must be `error.html` (S3 error_document; not yet created)
 
 # Commands
