@@ -19,7 +19,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: ./DevOps/Terraform/**
+    working-directory: DevOps/Terraform
 
 jobs:
   plan:
@@ -34,7 +34,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ap-northeast-1
-          
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
