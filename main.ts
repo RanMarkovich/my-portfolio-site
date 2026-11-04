@@ -164,7 +164,8 @@ function typewriterEffect(): void {
   const target = document.getElementById("typewriter");
   if (!target) return;
   const targetEl = target as HTMLElement;
-  const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery. 🚀";
+  // Text lives in the HTML so it still shows without JS
+  const fullText = targetEl.textContent?.trim() ?? "";
   targetEl.textContent = "";
   const chars = fullText.split("");
   let i = 0;
@@ -400,7 +401,7 @@ function setupProjectOverlay(): void {
 // Experience timeline with scroll-driven progress
 function setupTimeline(): void {
   const section = document.getElementById("timeline");
-  if (!section) return;
+  if (!section || typeof ScrollTrigger === "undefined") return;
 
   const progress = section.querySelector<HTMLElement>("#timeline-progress");
 
@@ -461,6 +462,12 @@ function setYear(): void {
 
 // Initialize all behaviors
 function init(): void {
+  setYear();
+  // Leave the page static if GSAP failed to load or the visitor prefers reduced motion
+  if (typeof gsap === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelector(".caret")?.remove();
+    return;
+  }
   animateHeroName();
   animateHeroProf();
   animateBlobs();
@@ -470,7 +477,6 @@ function init(): void {
   setupMagnetic();
   setupPageTransitions();
   setupProjectOverlay();
-  setYear();
   animateHeroPhoto();
   typewriterEffect();
 }

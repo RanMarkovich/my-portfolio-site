@@ -78,7 +78,7 @@ function animateHeroPhoto() {
 function typewriterEffect() {
   const target = document.getElementById("typewriter");
   if (!target) return;
-  const fullText = "Crafting tools, building platforms - moving developers to a faster and more quality product delivery. 🚀";
+  const fullText = (target.textContent == null ? void 0 : target.textContent.trim()) ?? "";
   target.textContent = "";
   const chars = fullText.split("");
   let i = 0;
@@ -241,7 +241,7 @@ function setupProjectOverlay() {
 }
 function setupTimeline() {
   const section = document.getElementById("timeline");
-  if (!section) return;
+  if (!section || typeof ScrollTrigger === "undefined") return;
   const progress = section.querySelector("#timeline-progress");
   const points = Array.from(section.querySelectorAll(".timeline-point"));
   const line = section.querySelector(".timeline-line");
@@ -273,6 +273,11 @@ function setYear() {
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 }
 function init() {
+  setYear();
+  if (typeof gsap === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.querySelector(".caret")?.remove();
+    return;
+  }
   animateHeroName();
   animateHeroProf();
   animateBlobs();
@@ -282,7 +287,6 @@ function init() {
   setupMagnetic();
   setupPageTransitions();
   setupProjectOverlay();
-  setYear();
   animateHeroPhoto();
   typewriterEffect();
 }
