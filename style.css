@@ -187,6 +187,8 @@ body {
 .about-photo { height: clamp(220px, 40vw, 420px); }
 .about-content p { color: var(--muted); }
 .about-experience { align-self: start; }
+.certs { grid-column: 1; }
+.certs img { display: block; width: 120px; height: auto; }
 .about-experience .section-title { margin-top: 0; margin-bottom: 10px; }
 
 .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
@@ -262,6 +264,7 @@ input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 6px
   .hero-inner { grid-template-columns: 1fr; gap: 50px; padding-right: 24px; }
   .hero-content { text-align: center; }
   .hero-photo { justify-self: center; }
+  .certs { justify-self: center; }
   .hero::after { height: 1px; opacity: .9; }
   .about::after { height: 1px; opacity: .9; }
   .site-nav { gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
