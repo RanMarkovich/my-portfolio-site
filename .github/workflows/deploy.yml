@@ -45,6 +45,7 @@ jobs:
             --include "style.css" \
             --include "main.js" \
             --include "assets/favicon.svg" \
+            --include "assets/aws-saa-badge.png" \
             --include "assets/profile.jpg" \
             --include "assets/DevOpsLabs.jpg"
 

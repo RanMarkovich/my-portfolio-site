@@ -17,8 +17,8 @@
     <link rel="stylesheet" href="./style.css" />
 
     <!-- GSAP CDN -->
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
     <!-- Compiled JS (from TypeScript) -->
     <script defer src="./main.js"></script>
   </head>
@@ -53,20 +53,23 @@
         </div>
         <div class="container hero-inner">
           <div class="hero-content">
-            <h3 class="hero-title-name">
+            <h1 class="hero-title-name">
               <span class="split">Ran Markovich</span>
-            </h3>
-            <h1 class="hero-title-prof">
-              <span class="split">DevOps Engineer</span>
             </h1>
-            <p class="hero-sub"><span id="typewriter" aria-label="intro"></span><span class="caret" aria-hidden="true"></span></p>
+            <h2 class="hero-title-prof">
+              <span class="split">DevOps Engineer</span>
+            </h2>
+            <p class="hero-sub"><span id="typewriter">Crafting tools, building platforms - moving developers to a faster and more quality product delivery. 🚀</span><span class="caret" aria-hidden="true"></span></p>
           </div>
           <figure class="hero-photo">
             <div class="hero-photo-frame">
-              <img src="./assets/profile.jpg" alt="Ran Markovich headshot" loading="eager" />
+              <img src="./assets/profile.jpg" alt="Ran Markovich headshot" width="560" height="560" loading="eager" />
             </div>
             <div class="hero-photo-shadow" aria-hidden="true"></div>
           </figure>
+          <div class="certs">
+            <img src="./assets/aws-saa-badge.png" alt="AWS Certified Solutions Architect – Associate badge" width="120" height="120" decoding="async" />
+          </div>
         </div>
       </section>
 
@@ -76,16 +79,16 @@
           <div class="section-head">
             <!-- <h2 class="section-title reveal">Selected Projects</h2> -->
           </div>
-          <section id="work" class="section projects">
+          <section class="section projects">
             <div class="container">
               <div class="section-head">
                 <h2 class="section-title reveal" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">Selected Projects</h2>
               </div>
               <div class="projects-grid">
-                <a href="#" class="project-card project-link magnetic has-hover" data-hover="View" data-project-title="DevOps Labs" data-project-desc="I truely believe in the learn-by-doing process. So whenever I get the change to learn something new, I will almost immidietly try to re-build it as a small-scale side project. You're more then welcome to take a look and Please Star, Comment or Contribute." data-project-img="" data-project-tags="GSAP, TypeScript, WebGL" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+                <a href="https://github.com/RanM-DevOpsLabs" target="_blank" rel="noopener noreferrer" class="project-card magnetic has-hover" data-hover="Open" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
                   <div class="project-thumb">
                     <div class="img ph ph-1">
-                      <img class="photo ph-avatar" aria-label="Headshot" role="img" src="./assets/DevOpsLabs.jpg" style="
+                      <img class="photo ph-avatar" alt="" width="327" height="200" loading="lazy" decoding="async" src="./assets/DevOpsLabs.jpg" style="
         width: 327px;
         height: 200px;
     ">
@@ -186,7 +189,6 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.85 3.14 8.96 7.49 10.41.55.1.75-.24.75-.53v-1.87c-3.05.66-3.69-1.31-3.69-1.31-.5-1.27-1.22-1.6-1.22-1.6-.99-.67.08-.66.08-.66 1.09.08 1.66 1.12 1.66 1.12.98 1.67 2.58 1.19 3.21.91.1-.71.38-1.19.69-1.46-2.43-.27-4.99-1.21-4.99-5.4 0-1.19.43-2.16 1.13-2.93-.11-.28-.49-1.41.11-2.94 0 0 .92-.29 3.02 1.12.88-.25 1.83-.37 2.77-.37.94 0 1.89.12 2.77.37 2.1-1.41 3.02-1.12 3.02-1.12.6 1.53.22 2.66.11 2.94.69.77 1.13 1.74 1.13 2.93 0 4.2-2.56 5.12-5 5.39.39.33.74.98.74 1.98v2.93c0 .29.2.63.75.53 4.35-1.44 7.49-5.56 7.49-10.41C23.02 5.24 18.27.5 12 .5z"/></svg>
                 <span>GitHub</span>
               </a>
-              </a>
             </div>
           </div>
           <!-- <div class="contact-form">
@@ -205,25 +207,9 @@
               </div>
               <button type="submit" class="btn magnetic has-hover" data-hover="Send">Send Message</button>
             </form> -->
-          </div>
         </div>
       </section>
     </main>
-
-    <!-- Project Overlay Template -->
-    <div id="project-overlay" aria-hidden="true">
-      <div class="project-overlay-inner" style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);">
-        <button class="overlay-close magnetic has-hover" data-hover="Close" aria-label="Close project" style="transform: translate(0px, 0px); left: 22px;">×</button>
-        <div class="overlay-media">
-          <div class="img ph ph-overlay"></div>
-        </div>
-        <div class="overlay-content">
-          <h3 class="overlay-title">DevOps Labs</h3>
-          <p class="overlay-desc"> </p>
-          <div class="overlay-tags"><span class="tag">GSAP</span><span class="tag">TypeScript</span><span class="tag">WebGL</span></div>
-        </div>
-      </div>
-    </div>
 
     <footer class="site-footer">
       <div class="container">
