@@ -13,7 +13,7 @@
 - `main.ts` = source, `main.js` = shipped; no build step, mirror every change into both by hand
 - New pages: copy `project.html` head (style.css, GSAP CDN, deferred main.js)
 - Only `--include` paths in `deploy.yml` ship to S3; add new site files there
-- 404 page must be `error.html` (S3 error_document; not yet created)
+- 404 page is `error.html` (S3 error_document); keep it in the `deploy.yml` allowlist
 
 # Commands
 - Preview: `python3 -m http.server 8000`

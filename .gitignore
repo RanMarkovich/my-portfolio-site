@@ -1,5 +1,8 @@
-**/*/account.tfvars
+**/*.tfvars
+!**/*.tfvars.example
 **/*/.terraform/*
 **/*/backend.tf
 **/*terraform.tfstate.backup
 **/*.tfstate
+**/*.tfplan
+**/crash.log
