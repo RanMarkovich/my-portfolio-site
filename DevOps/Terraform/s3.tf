@@ -1,3 +1,18 @@
+provider "aws" {
+  region = var.region
+}
+
+variable "region" {
+  description = "AWS region of the portfolio bucket"
+  type        = string
+  default     = "ap-northeast-1"
+}
+
+output "bucket_name" {
+  description = "Name of the portfolio S3 bucket"
+  value       = aws_s3_bucket.portfolio_ran_markovich.bucket
+}
+
 resource "aws_s3_bucket" "portfolio_ran_markovich" {
   bucket = "portfolio-ran-markovich"
 

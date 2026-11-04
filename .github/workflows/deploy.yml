@@ -38,8 +38,10 @@ jobs:
           aws s3 sync . "s3://$S3_BUCKET_NAME" \
             --delete \
             --no-progress \
+            --cache-control "max-age=300" \
             --exclude "*" \
             --include "index.html" \
+            --include "error.html" \
             --include "style.css" \
             --include "main.js" \
             --include "assets/favicon.svg" \
