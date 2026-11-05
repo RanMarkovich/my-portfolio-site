@@ -42,6 +42,8 @@ jobs:
             --exclude "*" \
             --include "index.html" \
             --include "error.html" \
+            --include "robots.txt" \
+            --include "sitemap.xml" \
             --include "style.css" \
             --include "main.js" \
             --include "assets/favicon.svg" \
