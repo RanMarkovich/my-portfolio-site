@@ -81,7 +81,7 @@ function animateHeroProf(): void {
       ease: easeOutExpo,
       duration: 1.1,
       stagger: { each: 0.02, from: "start" },
-      delay: 0.2,
+      delay: 0.35,
     }
   );
 }
@@ -434,7 +434,7 @@ function setupTimeline(): void {
   const anim = gsap.fromTo(
     progressEl,
     { height: "0%" },
-    { height: "100%", duration: 2.2, ease: easeInOut, paused: true, onUpdate: updatePassed }
+    { height: "100%", duration: 10, ease: easeInOut, paused: true, onUpdate: updatePassed }
   );
 
   ScrollTrigger.create({
