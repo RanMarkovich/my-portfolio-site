@@ -49,7 +49,8 @@ jobs:
             --include "assets/favicon.svg" \
             --include "assets/aws-saa-badge.png" \
             --include "assets/profile.jpg" \
-            --include "assets/DevOpsLabs.jpg"
+            --include "assets/DevOpsLabs.jpg" \
+            --include "assets/HomeLab.jpg"
 
       - name: Show website endpoint hint
         run: |
